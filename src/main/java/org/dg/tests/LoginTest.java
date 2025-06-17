@@ -48,7 +48,17 @@ public class LoginTest {
         loginPage.setEmail("stephan.armand@gmail.com");
         loginPage.clickEntrar();
 
-        String textoAlert = loginPage.alert();
-        Assert.assertEquals("Um ou mais campos obrigatórios não preenchidos.", textoAlert);
+        String textoAlertObrg = loginPage.alertObrg();
+        Assert.assertEquals("Um ou mais campos obrigatórios não preenchidos.", textoAlertObrg);
+    }
+
+    @Test
+    public void deveRetornarAlertDadosInvalidos() {
+        loginPage.setEmail("stephan.armand@gmail.com");
+        loginPage.setPassword("1");
+        loginPage.clickEntrar();
+
+        String textoAlertInvalidos = loginPage.alertInvalidos();
+        Assert.assertEquals("Usuário ou senha inválidos.", textoAlertInvalidos);
     }
 }
