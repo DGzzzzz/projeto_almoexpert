@@ -4,16 +4,21 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Duration;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DSL {
     private WebDriver driver;
+    private WebDriverWait wait;
 
     public DSL(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, 10);
     }
 
-    public void clickButton(String xpath) {
-        WebElement elemento = driver.findElement(By.xpath(xpath));
+    public void clickButton(By by) {
+        WebElement elemento = driver.findElement(by);
         elemento.click();
     }
 
@@ -27,5 +32,10 @@ public class DSL {
 
     public String pegarTextoAlert(By by) {
         return driver.findElement(by).getText();
+    }
+
+    public void esperaElementoVisivel(By by) {
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 }

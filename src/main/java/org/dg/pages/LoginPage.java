@@ -12,6 +12,9 @@ public class LoginPage {
         dsl = new DSL(driver);
     }
 
+    private By botaoEntrar = By.xpath("//button[@type='submit']");
+    private By imgHome = By.xpath("//img[@alt='Logo']");
+
     public void setEmail(String email) {
         dsl.writeText("email", email);
     }
@@ -21,7 +24,7 @@ public class LoginPage {
     }
 
     public void clickEntrar() {
-        dsl.clickButton("//button[@type='submit']");
+        dsl.clickButton(botaoEntrar);
     }
 
     public String alertObrg() {
@@ -34,5 +37,15 @@ public class LoginPage {
 
     public String getUrlAtual() {
         return dsl.getUrl();
+    }
+
+    public void fazerLogin(String email, String senha) {
+        setEmail(email);
+        setPassword(senha);
+        clickEntrar();
+    }
+
+    public void esperarPaginaFrontCarregar() {
+        dsl.esperaElementoVisivel(imgHome);
     }
 }
