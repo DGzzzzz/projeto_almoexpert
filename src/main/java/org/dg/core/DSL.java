@@ -23,7 +23,9 @@ public class DSL {
     }
 
     public void writeText(String id, String text) {
-        driver.findElement(By.id(id)).sendKeys(text);
+        WebElement input = driver.findElement(By.id(id));
+        input.clear();
+        input.sendKeys(text);
     }
 
     public String getUrl() {
