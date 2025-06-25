@@ -1,5 +1,6 @@
 package org.dg.tests;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.dg.pages.LoginPage;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,13 +13,19 @@ public class LoginTest {
     private WebDriver driver;
     private LoginPage loginPage;
 
+    Dotenv env = Dotenv.load();
+
+    String url_base = env.get("URL_BASE");
+    String email = env.get("LOGIN_EMAIL");
+    String senha = env.get("LOGIN_SENHA");
+
     @Before
     public void setUp() {
         String GECKO_DRIVER = System.getProperty("user.dir") + "\\src\\main\\resources\\webdrivers\\geckodriver.exe";
         System.setProperty("webdriver.gecko.driver", GECKO_DRIVER);
 
         driver = new FirefoxDriver();
-        driver.get("http://" + "35.209.123.161/front/login");
+        driver.get(url_base + "/login");
 
         loginPage = new LoginPage(driver);
     }
@@ -36,8 +43,8 @@ public class LoginTest {
 
     @Test
     public void deveLogarCorretamente() {
-        loginPage.setEmail("stephan.armand@aluno.feliz.ifrs.edu.br");
-        loginPage.setPassword("abc123");
+        loginPage.setEmail(email);
+        loginPage.setPassword(senha);
         loginPage.clickEntrar();
 
         Assert.assertTrue("URL esperada deveria conter 'front'", loginPage.getUrlAtual().contains("front"));
@@ -45,7 +52,7 @@ public class LoginTest {
 
     @Test
     public void deveRetornarAlertCamposObrigatorios() {
-        loginPage.setEmail("stephan.armand@gmail.com");
+        loginPage.setEmail(email);
         loginPage.clickEntrar();
 
         String textoAlertObrg = loginPage.alertObrg();
@@ -54,7 +61,7 @@ public class LoginTest {
 
     @Test
     public void deveRetornarAlertDadosInvalidos() {
-        loginPage.setEmail("stephan.armand@gmail.com");
+        loginPage.setEmail(email);
         loginPage.setPassword("1");
         loginPage.clickEntrar();
 

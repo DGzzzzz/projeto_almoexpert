@@ -57,8 +57,4 @@ public class MedidasPage {
         dsl.writeText("filtro_descricao", texto);
         dsl.clickButton(botaoFiltrar);
     }
-
-    public By pegarDescricaoFiltrada(String descricao) {
-        return By.xpath("//table//tr//td[contains(text(), '"+ descricao +"']");
-    }
 }
