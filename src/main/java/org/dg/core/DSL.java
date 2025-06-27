@@ -1,9 +1,6 @@
 package org.dg.core;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Duration;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -24,7 +21,10 @@ public class DSL {
     }
 
     public void writeText(String id, String text) {
-        WebElement input = driver.findElement(By.id(id));
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement input = wait.until(ExpectedConditions.elementToBeClickable(By.id(id)));
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", input);
         input.clear();
         input.sendKeys(text);
     }
