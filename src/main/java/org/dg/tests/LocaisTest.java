@@ -8,11 +8,14 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.UUID;
 
+@RunWith(Parameterized.class)
 public class LocaisTest {
     private WebDriver driver;
     private LocaisPage locaisPage;
@@ -24,6 +27,20 @@ public class LocaisTest {
     String email = env.get("LOGIN_EMAIL");
     String senha = env.get("LOGIN_SENHA");
 
+    private String descricaoLocal;
+
+    public LocaisTest(String descricaoLocal) {
+        this.descricaoLocal = descricaoLocal;
+    }
+
+    @Parameterized.Parameters
+    public static Object[] data() {
+        return new Object[]{
+            "Local Teste 1 " + UUID.randomUUID().toString().substring(0, 8),
+            "Local Teste 2 " + UUID.randomUUID().toString().substring(0, 8),
+            "Local Teste 3 " + UUID.randomUUID().toString().substring(0, 8)
+        };
+    }
 
     @Before
     public void setUp() {
