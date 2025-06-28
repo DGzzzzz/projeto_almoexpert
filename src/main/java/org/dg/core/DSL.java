@@ -86,4 +86,10 @@ public class DSL {
         textarea.clear();
         textarea.sendKeys(texto);
     }
+
+    public void esperarModalFechar(String id) {
+        new WebDriverWait(driver, 10).until(
+                ExpectedConditions.attributeToBe(By.id(id), "style", "display: none;")
+        );
+    }
 }
