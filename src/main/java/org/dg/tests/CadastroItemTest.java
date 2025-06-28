@@ -41,9 +41,9 @@ public class CadastroItemTest {
     @Parameterized.Parameters
     public static Object[][] data() {
         return new Object[][]{
-                {"DG 01", "Item DG Teste 1", "10"},
-                {"DG 02", "Item DG Teste 2", "20"},
-                {"DG 03", "Item DG Teste 3", "30"}
+                {"DG 01" + UUID.randomUUID().toString().substring(0, 4), "Item DG " + UUID.randomUUID().toString().substring(0, 8), "10"},
+                {"DG 02" + UUID.randomUUID().toString().substring(0, 4), "Item DG " + UUID.randomUUID().toString().substring(0, 8), "20"},
+                {"DG 03" + UUID.randomUUID().toString().substring(0, 4), "Item DG " + UUID.randomUUID().toString().substring(0, 8), "30"}
         };
     }
 
@@ -79,12 +79,12 @@ public class CadastroItemTest {
     }
 
     @Test
-    public void deveCadastrarNovoItem() {
-        cadastroItemPage.setCodigo("DG 0" + UUID.randomUUID().toString().substring(0, 4));
-        cadastroItemPage.setNome("Item DG " + UUID.randomUUID().toString().substring(0, 8));
-        cadastroItemPage.setValorMinimo("20");
+    public void deveCadastrarNovoItemComDadosParametrizados() {
+        cadastroItemPage.setCodigo(codigo);
+        cadastroItemPage.setNome(nome);
+        cadastroItemPage.setValorMinimo(valorMinimo);
         cadastroItemPage.selecionarExercito();
-        cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
+        cadastroItemPage.setObs("Este item foi adicionado para teste parametrizado.");
         cadastroItemPage.clickSelectCategoria("386");
         cadastroItemPage.clickSelectUnidadeMedida("283");
         cadastroItemPage.esperarPaginaItens();
@@ -96,10 +96,13 @@ public class CadastroItemTest {
     }
 
     @Test
-    public void deveCadastrarNovoItemComDadosParametrizados() {
-        cadastroItemPage.setCodigo(codigo);
-        cadastroItemPage.setNome(nome);
-        cadastroItemPage.setValorMinimo(valorMinimo);
+    public void deveCadastrarNovoItem() {
+        String codigoItem = "DG 0" + UUID.randomUUID().toString().substring(0, 4);
+        String nomeItem = "Item DG " + UUID.randomUUID().toString().substring(0, 8);
+
+        cadastroItemPage.setCodigo(codigoItem);
+        cadastroItemPage.setNome(nomeItem);
+        cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
         cadastroItemPage.clickSelectCategoria("386");
@@ -180,8 +183,30 @@ public class CadastroItemTest {
 
     @Test
     public void deveCadastrarItemDescIgual() {
+        String codigoItem = "DG 0" + UUID.randomUUID().toString().substring(0, 4);
+        String nomeItem = "Item DG " + UUID.randomUUID().toString().substring(0, 8);
+
+        cadastroItemPage.setCodigo(codigoItem);
+        cadastroItemPage.setNome(nomeItem);
+        cadastroItemPage.setValorMinimo("20");
+        cadastroItemPage.selecionarExercito();
+        cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
+        cadastroItemPage.clickSelectCategoria("386");
+        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.esperarPaginaItens();
+        cadastroItemPage.clickBotaoSalvar();
+
+        String textoAlertSucesso = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertSucesso);
+        Assert.assertEquals("Item cadastrado com sucesso!", textoAlertSucesso);
+
+        cadastroItemPage.clickBotaoVoltar();
+        cadastroItemPage.esperarPaginaListaItensCarregar();
+        Assert.assertTrue(driver.getCurrentUrl().contains("itens"));
+
+        cadastroItemPage.clickBotaoNovo();
         cadastroItemPage.setCodigo("DG 0" + UUID.randomUUID().toString().substring(0, 4));
-        cadastroItemPage.setNome("Item DG 080b2f7a");
+        cadastroItemPage.setNome(nomeItem);
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
@@ -197,8 +222,30 @@ public class CadastroItemTest {
 
     @Test
     public void deveCadastrarItemCodIgual() {
-        cadastroItemPage.setCodigo("DG1");
-        cadastroItemPage.setNome("Item DG " + UUID.randomUUID().toString().substring(0, 8));
+        String codigoItem = "DG 0" + UUID.randomUUID().toString().substring(0, 4);
+        String nomeItem = "Item DG " + UUID.randomUUID().toString().substring(0, 8);
+
+        cadastroItemPage.setCodigo(codigoItem);
+        cadastroItemPage.setNome(nomeItem);
+        cadastroItemPage.setValorMinimo("20");
+        cadastroItemPage.selecionarExercito();
+        cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
+        cadastroItemPage.clickSelectCategoria("386");
+        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.esperarPaginaItens();
+        cadastroItemPage.clickBotaoSalvar();
+
+        String textoAlertSucesso = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertSucesso);
+        Assert.assertEquals("Item cadastrado com sucesso!", textoAlertSucesso);
+
+        cadastroItemPage.clickBotaoVoltar();
+        cadastroItemPage.esperarPaginaListaItensCarregar();
+        Assert.assertTrue(driver.getCurrentUrl().contains("itens"));
+
+        cadastroItemPage.clickBotaoNovo();
+        cadastroItemPage.setCodigo(codigoItem);
+        cadastroItemPage.setNome("DG 0" + UUID.randomUUID().toString().substring(0, 4));
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
