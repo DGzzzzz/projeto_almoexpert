@@ -6,11 +6,14 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.UUID;
 
+@RunWith(Parameterized.class)
 public class CadastroSubItemTest {
     private WebDriver driver;
     private LocaisPage locaisPage;
@@ -19,6 +22,10 @@ public class CadastroSubItemTest {
     private MedidasPage medidasPage;
     private CadastroSubItemPage cadastroSubItemPage;
     private LoginPage login;
+
+    private String codigo;
+    private String nome;
+    private String quantidade;
 
     private String subItemNome = "Subitem DG " + UUID.randomUUID().toString().substring(0, 8);
     private String itemNome = "Item DG " + UUID.randomUUID().toString().substring(0, 8);
@@ -33,6 +40,20 @@ public class CadastroSubItemTest {
     String email = env.get("LOGIN_EMAIL");
     String senha = env.get("LOGIN_SENHA");
 
+    public CadastroSubItemTest(String codigo, String nome, String quantidade) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.quantidade = quantidade;
+    }
+
+    @Parameterized.Parameters
+    public static Object[][] data() {
+        return new Object[][] {
+            {"DG " + UUID.randomUUID().toString().substring(0, 4), "SubItem " + UUID.randomUUID().toString().substring(0, 8), "10"},
+            {"DG " + UUID.randomUUID().toString().substring(0, 4), "SubItem " + UUID.randomUUID().toString().substring(0, 8), "20"},
+            {"DG " + UUID.randomUUID().toString().substring(0, 4), "SubItem " + UUID.randomUUID().toString().substring(0, 8), "30"}
+        };
+    }
 
     @Before
     public void setUp() {

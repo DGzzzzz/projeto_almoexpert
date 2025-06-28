@@ -27,6 +27,7 @@ public class CadastroItemTest {
     private String codigo;
     private String nome;
     private String valorMinimo;
+
     private String unidadeMedida = "Unidade de Medida DG " + UUID.randomUUID().toString().substring(0, 8);
     private String categoria = "Categoria " + UUID.randomUUID().toString().substring(0, 8);
 
