@@ -8,15 +8,23 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.UUID;
 
+
+@RunWith(Parameterized.class)
 public class CadastroItemTest {
     private WebDriver driver;
     private CadastroItemPage cadastroItemPage;
     private LoginPage login;
+
+    private String codigo;
+    private String nome;
+    private String valorMinimo;
 
     Dotenv env = Dotenv.load();
 
@@ -24,6 +32,20 @@ public class CadastroItemTest {
     String email = env.get("LOGIN_EMAIL");
     String senha = env.get("LOGIN_SENHA");
 
+    public CadastroItemTest(String codigo, String nome, String valorMinimo) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.valorMinimo = valorMinimo;
+    }
+
+    @Parameterized.Parameters
+    public static Object[][] data() {
+        return new Object[][]{
+                {"DG 01", "Item DG Teste 1", "10"},
+                {"DG 02", "Item DG Teste 2", "20"},
+                {"DG 03", "Item DG Teste 3", "30"}
+        };
+    }
 
     @Before
     public void setUp() {
@@ -61,6 +83,23 @@ public class CadastroItemTest {
         cadastroItemPage.setCodigo("DG 0" + UUID.randomUUID().toString().substring(0, 4));
         cadastroItemPage.setNome("Item DG " + UUID.randomUUID().toString().substring(0, 8));
         cadastroItemPage.setValorMinimo("20");
+        cadastroItemPage.selecionarExercito();
+        cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
+        cadastroItemPage.clickSelectCategoria("386");
+        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.esperarPaginaItens();
+        cadastroItemPage.clickBotaoSalvar();
+
+        String textoAlertSucesso = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertSucesso);
+        Assert.assertEquals("Item cadastrado com sucesso!", textoAlertSucesso);
+    }
+
+    @Test
+    public void deveCadastrarNovoItemComDadosParametrizados() {
+        cadastroItemPage.setCodigo(codigo);
+        cadastroItemPage.setNome(nome);
+        cadastroItemPage.setValorMinimo(valorMinimo);
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
         cadastroItemPage.clickSelectCategoria("386");

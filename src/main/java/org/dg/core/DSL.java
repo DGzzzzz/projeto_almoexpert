@@ -53,7 +53,9 @@ public class DSL {
     }
 
     public String pegarTextoAlert(By by) {
-        return driver.findElement(by).getText();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement alert = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        return alert.getText();
     }
 
     public void esperaElementoVisivel(By by) {
