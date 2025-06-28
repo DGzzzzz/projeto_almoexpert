@@ -7,12 +7,15 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.UUID;
 
+@RunWith(Parameterized.class)
 public class MedidasTest {
     private WebDriver driver;
     private MedidasPage medidasPage;
@@ -24,6 +27,20 @@ public class MedidasTest {
     String email = env.get("LOGIN_EMAIL");
     String senha = env.get("LOGIN_SENHA");
 
+    private String descricaoMedida;
+
+    public MedidasTest(String descricaoMedida) {
+        this.descricaoMedida = descricaoMedida;
+    }
+
+    @Parameterized.Parameters
+    public static Object[] data() {
+        return new Object[]{
+            "Medida DG Teste 1 " + UUID.randomUUID().toString().substring(0, 8),
+            "Medida DG Teste 2 " + UUID.randomUUID().toString().substring(0, 8),
+            "Medida DG Teste 3 " + UUID.randomUUID().toString().substring(0, 8)
+        };
+    }
 
     @Before
     public void setUp() {
