@@ -6,11 +6,14 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.UUID;
 
+@RunWith(Parameterized.class)
 public class EstoqueTest {
     private WebDriver driver;
     private EstoquePage estoquePage;
@@ -34,6 +37,24 @@ public class EstoqueTest {
     String email = env.get("LOGIN_EMAIL");
     String senha = env.get("LOGIN_SENHA");
 
+    public EstoqueTest(String subItemNome, String itemNome, String unidadeMedida, String categoria, String marca, String local) {
+        this.subItemNome = subItemNome;
+        this.itemNome = itemNome;
+        this.unidadeMedida = unidadeMedida;
+        this.categoria = categoria;
+        this.marca = marca;
+        this.local = local;
+    }
+
+    @Parameterized.Parameters
+    public static Object[][] data() {
+        return new Object[][] {
+            { "Subitem Teste 1", "Item Teste 1", "Unidade de Medida Teste 1", "Categoria Teste 1", "Marca Teste 1", "Local Teste 1" },
+            { "Subitem Teste 2", "Item Teste 2", "Unidade de Medida Teste 2", "Categoria Teste 2", "Marca Teste 2", "Local Teste 2" },
+            { "Subitem Teste 3", "Item Teste 3", "Unidade de Medida Teste 3", "Categoria Teste 3", "Marca Teste 3", "Local Teste 3" },
+            { "Subitem Teste 4", "Item Teste 4", "Unidade de Medida Teste 4", "Categoria Teste 4", "Marca Teste 4", "Local Teste 4" }
+        };
+    }
 
     @Before
     public void setUp() {
