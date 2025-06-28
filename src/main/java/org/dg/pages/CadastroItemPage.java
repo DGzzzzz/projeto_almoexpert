@@ -11,11 +11,15 @@ public class CadastroItemPage {
         dsl = new DSL(driver);
     }
 
-    private By botaoNovo = By.xpath("//a[contains(.,'Novo')]");
-    private By botaoSalvar = By.cssSelector("button[type='submit']");
     private By titulo = By.xpath("//h5[contains(.,'Cadastro de Item')]");
     private By MsgAlert = By.xpath("//*[contains(@class,'p-toast-detail')]");
-    private By CampoCodigo = By.id("codigo");
+
+    private By botaoNovo = By.xpath("//a[contains(.,'Novo')]");
+    private By botaoSalvar = By.cssSelector("button[type='submit']");
+    private By botaoEditar = By.xpath("//i[contains(@class, 'p-element') and @ptooltip='Editar']");
+    private By botaoVoltar = By.xpath("//a[contains(.,'Voltar')]");
+    private By botaoFiltrar = By.xpath("//button[contains(@class, 'btn-dark') and contains(., 'Filtrar')]");
+
     private By selectCategoria = By.id("categoriaId");
     private By selectUnidade = By.id("unidadeMedidaId");
     private By checkPoliciaFederal = By.id("monitoradoPF");
@@ -28,6 +32,14 @@ public class CadastroItemPage {
 
     public void clickBotaoSalvar() {
         dsl.clickButton(botaoSalvar);
+    }
+
+    public void clickBotaoEditar() {
+        dsl.clickButton(botaoEditar);
+    }
+
+    public void clickBotaoVoltar() {
+        dsl.clickButton(botaoVoltar);
     }
 
     public void esperarPaginaListaItensCarregar() {
@@ -72,5 +84,15 @@ public class CadastroItemPage {
 
     public String textoAlert() {
         return dsl.pegarTextoAlert(MsgAlert);
+    }
+
+    public void filtrarCodigo(String codigo) {
+        dsl.writeText("filtro_codigo", codigo);
+        dsl.clickButton(botaoFiltrar);
+    }
+
+    public void filtrarDescricao(String descricao) {
+        dsl.writeText("filtro_nome", descricao);
+        dsl.clickButton(botaoFiltrar);
     }
 }

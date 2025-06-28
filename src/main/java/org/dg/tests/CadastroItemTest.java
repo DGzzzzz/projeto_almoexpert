@@ -68,9 +68,43 @@ public class CadastroItemTest {
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
-        String textoAlertInatido = cadastroItemPage.textoAlert();
-        System.out.println(textoAlertInatido);
-        Assert.assertEquals("Item cadastrado com sucesso!", textoAlertInatido);
+        String textoAlertSucesso = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertSucesso);
+        Assert.assertEquals("Item cadastrado com sucesso!", textoAlertSucesso);
+    }
+
+    @Test
+    public void deveEditarNovoItem() {
+        String codigoItem = "DG 0" + UUID.randomUUID().toString().substring(0, 4);
+        String nomeItem = "Item DG " + UUID.randomUUID().toString().substring(0, 8);
+
+        cadastroItemPage.setCodigo(codigoItem);
+        cadastroItemPage.setNome(nomeItem);
+        cadastroItemPage.setValorMinimo("20");
+        cadastroItemPage.selecionarExercito();
+        cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
+        cadastroItemPage.clickSelectCategoria("386");
+        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.esperarPaginaItens();
+        cadastroItemPage.clickBotaoSalvar();
+
+        String textoAlertSucesso = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertSucesso);
+        Assert.assertEquals("Item cadastrado com sucesso!", textoAlertSucesso);
+
+        cadastroItemPage.clickBotaoVoltar();
+        cadastroItemPage.esperarPaginaListaItensCarregar();
+        Assert.assertTrue(driver.getCurrentUrl().contains("itens"));
+
+        cadastroItemPage.filtrarCodigo(codigoItem);
+        String nomeEditado = nomeItem + "Editado";
+        cadastroItemPage.clickBotaoEditar();
+        cadastroItemPage.setNome(nomeEditado);
+        cadastroItemPage.clickBotaoSalvar();
+
+        String textoAlertEditado = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertEditado);
+        Assert.assertEquals("Item editado com sucesso!", textoAlertEditado);
     }
 
     @Test
@@ -85,9 +119,9 @@ public class CadastroItemTest {
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
-        String textoAlertInatido = cadastroItemPage.textoAlert();
-        System.out.println(textoAlertInatido);
-        Assert.assertEquals("Error: Já existe um Elemento com o mesmo nome!", textoAlertInatido);
+        String textoAlertJaExisteDesc = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertJaExisteDesc);
+        Assert.assertEquals("Error: Já existe um Elemento com o mesmo nome!", textoAlertJaExisteDesc);
     }
 
     @Test
@@ -102,8 +136,8 @@ public class CadastroItemTest {
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
-        String textoAlertInatido = cadastroItemPage.textoAlert();
-        System.out.println(textoAlertInatido);
-        Assert.assertEquals("Error: Já existe um Elemento com o mesmo código!", textoAlertInatido);
+        String textoAlertJaExisteCod = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertJaExisteCod);
+        Assert.assertEquals("Error: Já existe um Elemento com o mesmo código!", textoAlertJaExisteCod);
     }
 }
