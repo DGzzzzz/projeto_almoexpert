@@ -4,6 +4,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.dg.pages.CadastroItemPage;
 import org.dg.pages.LocaisPage;
 import org.dg.pages.LoginPage;
+import org.dg.pages.MedidasPage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,16 +22,20 @@ public class CadastroItemTest {
     private WebDriver driver;
     private CadastroItemPage cadastroItemPage;
     private LoginPage login;
+    private MedidasPage medidasPage;
 
     private String codigo;
     private String nome;
     private String valorMinimo;
+    private String unidadeMedida = "Unidade de Medida DG " + UUID.randomUUID().toString().substring(0, 8);
+    private String categoria = "Categoria " + UUID.randomUUID().toString().substring(0, 8);
 
     Dotenv env = Dotenv.load();
 
     String url_base = env.get("URL_BASE");
     String email = env.get("LOGIN_EMAIL");
     String senha = env.get("LOGIN_SENHA");
+
 
     public CadastroItemTest(String codigo, String nome, String valorMinimo) {
         this.codigo = codigo;
@@ -55,10 +60,20 @@ public class CadastroItemTest {
         driver = new FirefoxDriver();
         cadastroItemPage = new CadastroItemPage(driver);
         login = new LoginPage(driver);
+        medidasPage = new MedidasPage(driver);
 
         driver.get(url_base + "/login");
         login.fazerLogin(email, senha);
         login.esperarPaginaFrontCarregar();
+
+        driver.get(url_base + "/medidas");
+        medidasPage.esperarPaginaMedidasCarregar();
+        medidasPage.filtrarDescricao(unidadeMedida);
+        if( medidasPage.textoAlert().contains("Medida não encontrada.")) {
+            medidasPage.clickBotaoNovo();
+            medidasPage.setDescricao(unidadeMedida);
+            medidasPage.clickBotaoSalvar();
+        }
 
         driver.get(url_base + "/itens");
         cadastroItemPage.esperarPaginaListaItensCarregar();
@@ -78,6 +93,7 @@ public class CadastroItemTest {
         }
     }
 
+
     @Test
     public void deveCadastrarNovoItemComDadosParametrizados() {
         cadastroItemPage.setCodigo(codigo);
@@ -85,8 +101,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo(valorMinimo);
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste parametrizado.");
-        cadastroItemPage.clickSelectCategoria("386");
-        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.clickSelectCategoriaPorValor("386");
+        cadastroItemPage.clickSelectUnidadeMedidaPorTexto(unidadeMedida);
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
@@ -105,8 +121,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoria("386");
-        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.clickSelectCategoriaPorValor("386");
+        cadastroItemPage.clickSelectUnidadeMedidaPorTexto(unidadeMedida);
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
@@ -125,8 +141,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoria("386");
-        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.clickSelectCategoriaPorValor("386");
+        cadastroItemPage.clickSelectUnidadeMedidaPorValor("283");
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
@@ -159,8 +175,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarPolicia();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoria("386");
-        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.clickSelectCategoriaPorValor("386");
+        cadastroItemPage.clickSelectUnidadeMedidaPorValor("283");
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
@@ -191,8 +207,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoria("386");
-        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.clickSelectCategoriaPorValor("386");
+        cadastroItemPage.clickSelectUnidadeMedidaPorValor("283");
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
@@ -210,8 +226,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoria("386");
-        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.clickSelectCategoriaPorValor("386");
+        cadastroItemPage.clickSelectUnidadeMedidaPorValor("283");
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
@@ -230,8 +246,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoria("386");
-        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.clickSelectCategoriaPorValor("386");
+        cadastroItemPage.clickSelectUnidadeMedidaPorValor("283");
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
@@ -249,8 +265,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoria("386");
-        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.clickSelectCategoriaPorValor("386");
+        cadastroItemPage.clickSelectUnidadeMedidaPorValor("283");
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 

@@ -75,12 +75,20 @@ public class CadastroItemPage {
         dsl.writeText("quantidadeMinima", valorMinimo);
     }
 
-    public void clickSelectCategoria(String categoria) {
+    public void clickSelectCategoriaPorValor(String categoria) {
         dsl.selectPorValor(selectCategoria, categoria);
     }
 
-    public void clickSelectUnidadeMedida(String unidade) {
+    public void clickSelectCategoriaPorTexto(String categoria) {
+        dsl.selectPorTexto(selectCategoria, categoria);
+    }
+
+    public void clickSelectUnidadeMedidaPorValor(String unidade) {
         dsl.selectPorValor(selectUnidade, unidade);
+    }
+
+    public void clickSelectUnidadeMedidaPorTexto(String unidade) {
+        dsl.selectPorTexto(selectUnidade, unidade);
     }
 
     public void selecionarStatus(String status) {

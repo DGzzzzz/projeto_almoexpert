@@ -70,7 +70,7 @@ public class DSL {
 
     public void selectPorTexto(By by, String texto) {
         Select select = new Select(driver.findElement(by));
-        select.selectByValue(texto);
+        select.selectByVisibleText(texto);
     }
 
     public void marcarCheckBox(By by) {
