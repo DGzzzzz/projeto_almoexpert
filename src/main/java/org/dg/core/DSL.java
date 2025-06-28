@@ -16,13 +16,32 @@ public class DSL {
     }
 
     public void clickButton(By by) {
-        WebElement elemento = driver.findElement(by);
-        elemento.click();
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        try {
+            WebElement elemento = wait.until(ExpectedConditions.elementToBeClickable(by));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", elemento);
+            try {
+                elemento.click();
+            } catch (Exception e) {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", elemento);
+            }
+        } catch (TimeoutException e) {
+            System.out.println("Botão não encontrado ou não clicável: " + by.toString());
+            throw e;
+        }
     }
 
     public void writeText(String id, String text) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        WebElement input = wait.until(ExpectedConditions.elementToBeClickable(By.id(id)));
+        java.util.List<WebElement> inputs = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id(id)));
+        WebElement input = null;
+        for (WebElement el : inputs) {
+            if (el.isDisplayed() && el.isEnabled()) {
+                input = el;
+                break;
+            }
+        }
+        if (input == null) throw new RuntimeException("Nenhum input visível e habilitado encontrado para id: " + id);
 
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", input);
         input.clear();
@@ -40,5 +59,29 @@ public class DSL {
     public void esperaElementoVisivel(By by) {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.visibilityOfElementLocated(by));
+    }
+
+    public void selectPorValor(By by, String valor) {
+        Select select = new Select(driver.findElement(by));
+        select.selectByValue(valor);
+    }
+
+    public void selectPorTexto(By by, String texto) {
+        Select select = new Select(driver.findElement(by));
+        select.selectByValue(texto);
+    }
+
+    public void marcarCheckBox(By by) {
+        WebElement checkbox = driver.findElement(by);
+        checkbox.click();
+    }
+
+    public void escreverTextArea(By by, String texto) {
+        WebElement textarea = new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.elementToBeClickable(by));
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", textarea);
+        textarea.clear();
+        textarea.sendKeys(texto);
     }
 }

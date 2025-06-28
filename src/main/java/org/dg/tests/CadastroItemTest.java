@@ -5,6 +5,7 @@ import org.dg.pages.CadastroItemPage;
 import org.dg.pages.LocaisPage;
 import org.dg.pages.LoginPage;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -39,6 +40,9 @@ public class CadastroItemTest {
 
         driver.get(url_base + "/itens");
         cadastroItemPage.esperarPaginaListaItensCarregar();
+
+        cadastroItemPage.clickBotaoNovo();
+        Assert.assertTrue(driver.getCurrentUrl().contains("cadastro-item"));
     }
 
     @After
@@ -54,9 +58,52 @@ public class CadastroItemTest {
 
     @Test
     public void deveCadastrarNovoItem() {
-        cadastroItemPage.clickBotaoNovo();
+        cadastroItemPage.setCodigo("DG 0" + UUID.randomUUID().toString().substring(0, 4));
+        cadastroItemPage.setNome("Item DG " + UUID.randomUUID().toString().substring(0, 8));
+        cadastroItemPage.setValorMinimo("20");
+        cadastroItemPage.selecionarExercito();
+        cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
+        cadastroItemPage.clickSelectCategoria("386");
+        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.esperarPaginaItens();
+        cadastroItemPage.clickBotaoSalvar();
+
+        String textoAlertInatido = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertInatido);
+        Assert.assertEquals("Item cadastrado com sucesso!", textoAlertInatido);
+    }
+
+    @Test
+    public void deveCadastrarItemDescIgual() {
+        cadastroItemPage.setCodigo("DG 0" + UUID.randomUUID().toString().substring(0, 4));
+        cadastroItemPage.setNome("Item DG 080b2f7a");
+        cadastroItemPage.setValorMinimo("20");
+        cadastroItemPage.selecionarExercito();
+        cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
+        cadastroItemPage.clickSelectCategoria("386");
+        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.esperarPaginaItens();
+        cadastroItemPage.clickBotaoSalvar();
+
+        String textoAlertInatido = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertInatido);
+        Assert.assertEquals("Error: Já existe um Elemento com o mesmo nome!", textoAlertInatido);
+    }
+
+    @Test
+    public void deveCadastrarItemCodIgual() {
         cadastroItemPage.setCodigo("DG1");
-        cadastroItemPage.setNome("Item DG" + UUID.randomUUID().toString().substring(0, 8));
-        cadastroItemPage.setValorMinimo("10");
+        cadastroItemPage.setNome("Item DG " + UUID.randomUUID().toString().substring(0, 8));
+        cadastroItemPage.setValorMinimo("20");
+        cadastroItemPage.selecionarExercito();
+        cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
+        cadastroItemPage.clickSelectCategoria("386");
+        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.esperarPaginaItens();
+        cadastroItemPage.clickBotaoSalvar();
+
+        String textoAlertInatido = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertInatido);
+        Assert.assertEquals("Error: Já existe um Elemento com o mesmo código!", textoAlertInatido);
     }
 }
