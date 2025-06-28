@@ -66,31 +66,55 @@ public class MarcasTest {
 
     @Test
     public void deveCadastrarMarcaMesmaDescricao() {
+        String descricaoMarca = "Marca DG " + UUID.randomUUID().toString().substring(0, 8);
+
         marcasPage.clickBotaoNovo();
-        marcasPage.setDescricao("ABCD");
+        marcasPage.setDescricao(descricaoMarca);
+        marcasPage.clickBotaoSalvar();
+        marcasPage.esperarTextoAlert("Marca cadastrada com sucesso!");
+
+        marcasPage.clickBotaoNovo();
+        marcasPage.setDescricao(descricaoMarca);
         marcasPage.clickBotaoSalvar();
 
+        marcasPage.esperarTextoAlert("Já existe uma Marca com o mesmo nome!");
         String textoAlertJaExiste = marcasPage.textoAlert();
         Assert.assertEquals("Já existe uma Marca com o mesmo nome!", textoAlertJaExiste);
     }
 
     @Test
     public void deveInativarMarcaCadastrada() {
-        marcasPage.filtrarDescricao("Marca DG Inativar");
+        String descricaoMarca = "Marca DG " + UUID.randomUUID().toString().substring(0, 8);
+
+        marcasPage.clickBotaoNovo();
+        marcasPage.setDescricao(descricaoMarca);
+        marcasPage.clickBotaoSalvar();
+        marcasPage.esperarTextoAlert("Marca cadastrada com sucesso!");
+
+        marcasPage.filtrarDescricao(descricaoMarca);
         marcasPage.clickIconInativar();
         marcasPage.clickBotaoConfirmar();
 
+        marcasPage.esperarTextoAlert("Marca inativada com sucesso!");
         String textoAlertInatido = marcasPage.textoAlert();
         Assert.assertEquals("Marca inativada com sucesso!", textoAlertInatido);
     }
 
     @Test
     public void deveEditarMarcaCadastrada() {
-        marcasPage.filtrarDescricao("Marca DG Editar");
+        String descricaoMarca = "Marca DG " + UUID.randomUUID().toString().substring(0, 8);
+
+        marcasPage.clickBotaoNovo();
+        marcasPage.setDescricao(descricaoMarca);
+        marcasPage.clickBotaoSalvar();
+        marcasPage.esperarTextoAlert("Marca cadastrada com sucesso!");
+
+        marcasPage.filtrarDescricao(descricaoMarca);
         marcasPage.clickBotaoEditar();
-        marcasPage.setDescricao("Marca DG Editado ok");
+        marcasPage.setDescricao(descricaoMarca + " Editada");
         marcasPage.clickBotaoSalvar();
 
+        marcasPage.esperarTextoAlert("Marca editada com sucesso!");
         String textoAlertEditado = marcasPage.textoAlert();
         Assert.assertEquals("Marca editada com sucesso!", textoAlertEditado);
     }

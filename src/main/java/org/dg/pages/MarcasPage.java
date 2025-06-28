@@ -57,4 +57,8 @@ public class MarcasPage {
         dsl.writeText("filtro_nome", texto);
         dsl.clickButton(botaoFiltrar);
     }
+
+    public void esperarTextoAlert(String textoEsperado) {
+        dsl.esperarTextoAlert(MsgAlert, textoEsperado);
+    }
 }
