@@ -66,31 +66,55 @@ public class LocaisTest {
 
     @Test
     public void deveCadastrarLocalMesmaDescricao() {
+        String descricaoLocal = "Local DG " + UUID.randomUUID().toString().substring(0, 8);
+
         locaisPage.clickBotaoNovo();
-        locaisPage.setDescricao("Laboratório");
+        locaisPage.setDescricao(descricaoLocal);
+        locaisPage.clickBotaoSalvar();
+        locaisPage.esperarTextoAlert("Local cadastrado com sucesso!");
+
+        locaisPage.clickBotaoNovo();
+        locaisPage.setDescricao(descricaoLocal);
         locaisPage.clickBotaoSalvar();
 
+        locaisPage.esperarTextoAlert("Já existe um Local com o mesmo nome!");
         String textoAlertJaExiste = locaisPage.textoAlert();
         Assert.assertEquals("Já existe um Local com o mesmo nome!", textoAlertJaExiste);
     }
 
     @Test
     public void deveInativarLocalCadastrada() {
-        locaisPage.filtrarDescricao("Local DG Inativar");
+        String descricaoLocal = "Local DG " + UUID.randomUUID().toString().substring(0, 8);
+
+        locaisPage.clickBotaoNovo();
+        locaisPage.setDescricao(descricaoLocal);
+        locaisPage.clickBotaoSalvar();
+        locaisPage.esperarTextoAlert("Local cadastrado com sucesso!");
+
+        locaisPage.filtrarDescricao(descricaoLocal);
         locaisPage.clickIconInativar();
         locaisPage.clickBotaoConfirmar();
 
+        locaisPage.esperarTextoAlert("Local inativado com sucesso!");
         String textoAlertInatido = locaisPage.textoAlert();
         Assert.assertEquals("Local inativado com sucesso!", textoAlertInatido);
     }
 
     @Test
     public void deveEditarLocalCadastrada() {
-        locaisPage.filtrarDescricao("Local DG Editar");
+        String descricaoLocal = "Local DG " + UUID.randomUUID().toString().substring(0, 8);
+
+        locaisPage.clickBotaoNovo();
+        locaisPage.setDescricao(descricaoLocal);
+        locaisPage.clickBotaoSalvar();
+        locaisPage.esperarTextoAlert("Local cadastrado com sucesso!");
+
+        locaisPage.filtrarDescricao(descricaoLocal);
         locaisPage.clickBotaoEditar();
-        locaisPage.setDescricao("Local DG Editado ok");
+        locaisPage.setDescricao(descricaoLocal + " Editado");
         locaisPage.clickBotaoSalvar();
 
+        locaisPage.esperarTextoAlert("Local editado com sucesso!");
         String textoAlertEditado = locaisPage.textoAlert();
         Assert.assertEquals("Local editado com sucesso!", textoAlertEditado);
     }
