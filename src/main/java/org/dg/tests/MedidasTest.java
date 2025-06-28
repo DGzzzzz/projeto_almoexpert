@@ -66,31 +66,51 @@ public class MedidasTest {
 
     @Test
     public void deveCadastrarMedidaMesmaDescricao() {
+        String descricaoMedida = "Medida DG " + UUID.randomUUID().toString().substring(0, 8);
+
         medidasPage.clickBotaoNovo();
-        medidasPage.setDescricao("Medida 123456");
+        medidasPage.setDescricao(descricaoMedida);
+        medidasPage.clickBotaoSalvar();
+        medidasPage.esperarTextoAlert("Medida cadastrada com sucesso!");
+
+        medidasPage.clickBotaoNovo();
+        medidasPage.setDescricao(descricaoMedida);
         medidasPage.clickBotaoSalvar();
 
+        medidasPage.esperarTextoAlert("Já existe uma Unidade de Medida com a mesma descrição!");
         String textoAlertJaExiste = medidasPage.textoAlert();
         Assert.assertEquals("Já existe uma Unidade de Medida com a mesma descrição!", textoAlertJaExiste);
     }
 
     @Test
     public void deveInativarMedidaCadastrada() {
-        medidasPage.filtrarDescricao("Medida DG Inativar");
+        String descricaoMedida = "Medida DG " + UUID.randomUUID().toString().substring(0, 8);
+
+        medidasPage.clickBotaoNovo();
+        medidasPage.setDescricao(descricaoMedida);
+        medidasPage.clickBotaoSalvar();
+        medidasPage.filtrarDescricao(descricaoMedida);
         medidasPage.clickIconInativar();
         medidasPage.clickBotaoConfirmar();
 
+        medidasPage.esperarTextoAlert("Medida inativada com sucesso!");
         String textoAlertInatido = medidasPage.textoAlert();
         Assert.assertEquals("Medida inativada com sucesso!", textoAlertInatido);
     }
 
     @Test
     public void deveEditarMedidaCadastrada() {
-        medidasPage.filtrarDescricao("Medida DG Editar");
+        String descricaoMedida = "Medida DG " + UUID.randomUUID().toString().substring(0, 8);
+
+        medidasPage.clickBotaoNovo();
+        medidasPage.setDescricao(descricaoMedida);
+        medidasPage.clickBotaoSalvar();
+        medidasPage.filtrarDescricao(descricaoMedida);
         medidasPage.clickBotaoEditar();
-        medidasPage.setDescricao("Medida DG Editada ok");
+        medidasPage.setDescricao(descricaoMedida + " Editada");
         medidasPage.clickBotaoSalvar();
 
+        medidasPage.esperarTextoAlert("Medida editada com sucesso!");
         String textoAlertEditado = medidasPage.textoAlert();
         Assert.assertEquals("Medida editada com sucesso!", textoAlertEditado);
     }

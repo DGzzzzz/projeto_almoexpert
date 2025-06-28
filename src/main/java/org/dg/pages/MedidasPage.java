@@ -57,4 +57,8 @@ public class MedidasPage {
         dsl.writeText("filtro_descricao", texto);
         dsl.clickButton(botaoFiltrar);
     }
+
+    public void esperarTextoAlert(String textoEsperado) {
+        dsl.esperarTextoAlert(MsgAlert, textoEsperado);
+    }
 }

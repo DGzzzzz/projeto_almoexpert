@@ -92,4 +92,10 @@ public class DSL {
                 ExpectedConditions.attributeToBe(By.id(id), "style", "display: none;")
         );
     }
+
+    public void esperarTextoAlert(By by, String textoEsperado) {
+        new WebDriverWait(driver, 10).until(
+                ExpectedConditions.textToBePresentInElementLocated(by, textoEsperado)
+        );
+    }
 }
