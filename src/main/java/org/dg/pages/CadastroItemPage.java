@@ -19,6 +19,11 @@ public class CadastroItemPage {
     private By botaoEditar = By.xpath("//i[contains(@class, 'p-element') and @ptooltip='Editar']");
     private By botaoVoltar = By.xpath("//a[contains(.,'Voltar')]");
     private By botaoFiltrar = By.xpath("//button[contains(@class, 'btn-dark') and contains(., 'Filtrar')]");
+    private By iconInativar = By.xpath("//i[contains(@class, 'fa-ban') and @ptooltip='Inativar']");
+    private By botaoConfirmar = By.xpath("//button[normalize-space(text())='Confirmar']");
+
+    private By selectFiltroStatus = By.id("filtro_status");
+    private By selectStatus = By.id("status");
 
     private By selectCategoria = By.id("categoriaId");
     private By selectUnidade = By.id("unidadeMedidaId");
@@ -40,6 +45,14 @@ public class CadastroItemPage {
 
     public void clickBotaoVoltar() {
         dsl.clickButton(botaoVoltar);
+    }
+
+    public void clickBotaoInativar() {
+        dsl.clickButton(iconInativar);
+    }
+
+    public void clickBotaoConfirmar() {
+        dsl.clickButton(botaoConfirmar);
     }
 
     public void esperarPaginaListaItensCarregar() {
@@ -70,6 +83,10 @@ public class CadastroItemPage {
         dsl.selectPorValor(selectUnidade, unidade);
     }
 
+    public void selecionarStatus(String status) {
+        dsl.selectPorValor(selectStatus, status);
+    }
+
     public void selecionarPolicia() {
         dsl.marcarCheckBox(checkPoliciaFederal);
     }
@@ -93,6 +110,11 @@ public class CadastroItemPage {
 
     public void filtrarDescricao(String descricao) {
         dsl.writeText("filtro_nome", descricao);
+        dsl.clickButton(botaoFiltrar);
+    }
+
+    public void filtrarStatus(String status) {
+        dsl.selectPorValor(selectFiltroStatus, status);
         dsl.clickButton(botaoFiltrar);
     }
 }

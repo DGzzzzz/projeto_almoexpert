@@ -108,6 +108,38 @@ public class CadastroItemTest {
     }
 
     @Test
+    public void deveInativarItem() {
+        String codigoItem = "DG 0" + UUID.randomUUID().toString().substring(0, 4);
+        String nomeItem = "Item DG " + UUID.randomUUID().toString().substring(0, 8);
+
+        cadastroItemPage.setCodigo(codigoItem);
+        cadastroItemPage.setNome(nomeItem);
+        cadastroItemPage.setValorMinimo("20");
+        cadastroItemPage.selecionarPolicia();
+        cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
+        cadastroItemPage.clickSelectCategoria("386");
+        cadastroItemPage.clickSelectUnidadeMedida("283");
+        cadastroItemPage.esperarPaginaItens();
+        cadastroItemPage.clickBotaoSalvar();
+
+        String textoAlertSucesso = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertSucesso);
+        Assert.assertEquals("Item cadastrado com sucesso!", textoAlertSucesso);
+
+        cadastroItemPage.clickBotaoVoltar();
+        cadastroItemPage.esperarPaginaListaItensCarregar();
+        Assert.assertTrue(driver.getCurrentUrl().contains("itens"));
+
+        cadastroItemPage.filtrarDescricao(nomeItem);
+        cadastroItemPage.clickBotaoInativar();
+        cadastroItemPage.clickBotaoConfirmar();
+
+        String textoAlertInativado = cadastroItemPage.textoAlert();
+        System.out.println(textoAlertInativado);
+        Assert.assertEquals("Elemento inativado com sucesso!", textoAlertInativado);
+    }
+
+    @Test
     public void deveCadastrarItemDescIgual() {
         cadastroItemPage.setCodigo("DG 0" + UUID.randomUUID().toString().substring(0, 4));
         cadastroItemPage.setNome("Item DG 080b2f7a");
