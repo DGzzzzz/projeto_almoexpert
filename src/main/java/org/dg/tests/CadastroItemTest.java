@@ -1,10 +1,7 @@
 package org.dg.tests;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import org.dg.pages.CadastroItemPage;
-import org.dg.pages.LocaisPage;
-import org.dg.pages.LoginPage;
-import org.dg.pages.MedidasPage;
+import org.dg.pages.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,6 +20,7 @@ public class CadastroItemTest {
     private CadastroItemPage cadastroItemPage;
     private LoginPage login;
     private MedidasPage medidasPage;
+    private CategoriaPage categoriaPage;
 
     private String codigo;
     private String nome;
@@ -62,6 +60,7 @@ public class CadastroItemTest {
         cadastroItemPage = new CadastroItemPage(driver);
         login = new LoginPage(driver);
         medidasPage = new MedidasPage(driver);
+        categoriaPage = new CategoriaPage(driver);
 
         driver.get(url_base + "/login");
         login.fazerLogin(email, senha);
@@ -75,6 +74,12 @@ public class CadastroItemTest {
             medidasPage.setDescricao(unidadeMedida);
             medidasPage.clickBotaoSalvar();
         }
+
+        driver.get(url_base + "/categorias");
+        categoriaPage.esperarPaginaCategoriasCarregar();
+        categoriaPage.clickBotaoNovo();
+        categoriaPage.setDescricao(categoria);
+        categoriaPage.clickBotaoSalvar();
 
         driver.get(url_base + "/itens");
         cadastroItemPage.esperarPaginaListaItensCarregar();
@@ -102,7 +107,7 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo(valorMinimo);
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste parametrizado.");
-        cadastroItemPage.clickSelectCategoriaPorValor("386");
+        cadastroItemPage.clickSelectCategoriaPorTexto(categoria);
         cadastroItemPage.clickSelectUnidadeMedidaPorTexto(unidadeMedida);
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
@@ -122,7 +127,7 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoriaPorValor("386");
+        cadastroItemPage.clickSelectCategoriaPorTexto(categoria);
         cadastroItemPage.clickSelectUnidadeMedidaPorTexto(unidadeMedida);
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
@@ -142,8 +147,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoriaPorValor("386");
-        cadastroItemPage.clickSelectUnidadeMedidaPorValor("283");
+        cadastroItemPage.clickSelectCategoriaPorTexto(categoria);
+        cadastroItemPage.clickSelectUnidadeMedidaPorTexto(unidadeMedida);
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
@@ -176,8 +181,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarPolicia();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoriaPorValor("386");
-        cadastroItemPage.clickSelectUnidadeMedidaPorValor("283");
+        cadastroItemPage.clickSelectCategoriaPorTexto(categoria);
+        cadastroItemPage.clickSelectUnidadeMedidaPorTexto(unidadeMedida);
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
@@ -208,8 +213,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoriaPorValor("386");
-        cadastroItemPage.clickSelectUnidadeMedidaPorValor("283");
+        cadastroItemPage.clickSelectCategoriaPorTexto(categoria);
+        cadastroItemPage.clickSelectUnidadeMedidaPorTexto(unidadeMedida);
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
@@ -227,8 +232,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoriaPorValor("386");
-        cadastroItemPage.clickSelectUnidadeMedidaPorValor("283");
+        cadastroItemPage.clickSelectCategoriaPorTexto(categoria);
+        cadastroItemPage.clickSelectUnidadeMedidaPorTexto(unidadeMedida);
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
@@ -247,8 +252,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoriaPorValor("386");
-        cadastroItemPage.clickSelectUnidadeMedidaPorValor("283");
+        cadastroItemPage.clickSelectCategoriaPorTexto(categoria);
+        cadastroItemPage.clickSelectUnidadeMedidaPorTexto(unidadeMedida);
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
@@ -266,8 +271,8 @@ public class CadastroItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoriaPorValor("386");
-        cadastroItemPage.clickSelectUnidadeMedidaPorValor("283");
+        cadastroItemPage.clickSelectCategoriaPorTexto(categoria);
+        cadastroItemPage.clickSelectUnidadeMedidaPorTexto(unidadeMedida);
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
 
