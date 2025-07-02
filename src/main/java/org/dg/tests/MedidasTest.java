@@ -91,6 +91,7 @@ public class MedidasTest {
         medidasPage.esperarTextoAlert("Medida cadastrada com sucesso!");
 
         medidasPage.clickBotaoNovo();
+        medidasPage.filtrarDescricao(descricaoMedida);
         medidasPage.setDescricao(descricaoMedida);
         medidasPage.clickBotaoSalvar();
 

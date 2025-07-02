@@ -91,6 +91,7 @@ public class LocaisTest {
         locaisPage.esperarTextoAlert("Local cadastrado com sucesso!");
 
         locaisPage.clickBotaoNovo();
+        locaisPage.filtrarDescricao(descricaoLocal);
         locaisPage.setDescricao(descricaoLocal);
         locaisPage.clickBotaoSalvar();
 

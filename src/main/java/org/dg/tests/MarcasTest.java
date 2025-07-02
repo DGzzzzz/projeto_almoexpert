@@ -90,6 +90,7 @@ public class MarcasTest {
         marcasPage.clickBotaoSalvar();
         marcasPage.esperarTextoAlert("Marca cadastrada com sucesso!");
 
+        marcasPage.filtrarDescricao(descricaoMarca);
         marcasPage.clickBotaoNovo();
         marcasPage.setDescricao(descricaoMarca);
         marcasPage.clickBotaoSalvar();
