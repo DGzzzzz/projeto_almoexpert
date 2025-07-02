@@ -20,6 +20,7 @@ public class CadastroSubItemTest {
     private MarcasPage marcasPage;
     private CadastroItemPage cadastroItemPage;
     private MedidasPage medidasPage;
+    private CategoriaPage categoriaPage;
     private CadastroSubItemPage cadastroSubItemPage;
     private LoginPage login;
 
@@ -64,6 +65,7 @@ public class CadastroSubItemTest {
         locaisPage = new LocaisPage(driver);
         login = new LoginPage(driver);
         marcasPage = new MarcasPage(driver);
+        categoriaPage = new CategoriaPage(driver);
         cadastroItemPage = new CadastroItemPage(driver);
         medidasPage = new MedidasPage(driver);
         cadastroSubItemPage = new CadastroSubItemPage(driver);
@@ -80,6 +82,12 @@ public class CadastroSubItemTest {
             medidasPage.setDescricao(unidadeMedida);
             medidasPage.clickBotaoSalvar();
         }
+
+        driver.get(url_base + "/categorias");
+        categoriaPage.esperarPaginaCategoriasCarregar();
+        categoriaPage.clickBotaoNovo();
+        categoriaPage.setDescricao(categoria);
+        categoriaPage.clickBotaoSalvar();
 
         driver.get(url_base + "/locais");
         locaisPage.esperarPaginaLocaisCarregar();
@@ -110,7 +118,7 @@ public class CadastroSubItemTest {
         cadastroItemPage.setValorMinimo("20");
         cadastroItemPage.selecionarExercito();
         cadastroItemPage.setObs("Este item foi adicionado para teste automatizado.");
-        cadastroItemPage.clickSelectCategoriaPorValor("386");
+        cadastroItemPage.clickSelectCategoriaPorTexto(categoria);
         cadastroItemPage.clickSelectUnidadeMedidaPorTexto(unidadeMedida);
         cadastroItemPage.esperarPaginaItens();
         cadastroItemPage.clickBotaoSalvar();
