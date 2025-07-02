@@ -4,10 +4,10 @@ import org.dg.core.DSL;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class MarcasPage {
+public class CategoriaPage {
     private DSL dsl;
 
-    public MarcasPage(WebDriver driver) {
+    public CategoriaPage(WebDriver driver) {
         dsl = new DSL(driver);
     }
 
@@ -37,7 +37,7 @@ public class MarcasPage {
         dsl.clickButton(botaoConfirmar);
     }
 
-    public void esperarPaginaLocaisCarregar() {
+    public void esperarPaginaCategoriasCarregar() {
         dsl.esperaElementoVisivel(botaoNovo);
     }
 

@@ -61,4 +61,8 @@ public class MedidasPage {
     public void esperarTextoAlert(String textoEsperado) {
         dsl.esperarTextoAlert(MsgAlert, textoEsperado);
     }
+
+    public void esperarInputDescricao() {
+        dsl.esperaElementoVisivel(By.id("nome"));
+    }
 }

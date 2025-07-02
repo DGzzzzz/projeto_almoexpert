@@ -61,4 +61,7 @@ public class LocaisPage {
         dsl.esperarTextoAlert(MsgAlert, textoEsperado);
     }
 
+    public void esperarInputDescricao() {
+        dsl.esperaElementoVisivel(By.id("nome"));
+    }
 }
